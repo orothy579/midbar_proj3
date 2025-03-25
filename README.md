@@ -1,1 +1,1 @@
-#New Study about RUST!
+# New Study about RUST!
