@@ -66,5 +66,6 @@ fn main() {
 
     println!("tup.0 : {tup_0} , tup.1 : {tup_1} , tup.2 : {tup_2}");
 
-    let a = [1, 2, 3, 4, 5];
+    let a: [i32; 5] = [1, 2, 3, 4, 5];
+    let b: [i32; 5] = [3; 5];
 }
