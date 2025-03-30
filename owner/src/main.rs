@@ -50,13 +50,27 @@
 //     some_string.push_str(", world")
 // }
 
-fn main() {
-    let mut s = String::from("hello");
-    let r1 = &s; // no problem.
-    let r2 = &s; // no problem.
-    println!("{} {}", r1, r2);
+// fn main() {
+//     let mut s = String::from("hello");
+//     let r1 = &s; // no problem.
+//     let r2 = &s; // no problem.
+//     println!("{} {}", r1, r2);
 
-    let r3 = &mut s; // problem!
+//     let r3 = &mut s; // problem!
 
-    println!("{}", r3);
+//     println!("{}", r3);
+// }
+
+// 예제 4-7
+fn main() {}
+
+fn first_word(s: &String) -> usize {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
+    }
+    s.len()
 }
