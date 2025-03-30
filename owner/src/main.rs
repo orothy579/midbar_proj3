@@ -62,20 +62,79 @@
 // }
 
 // 예제 4-7
+// fn main() {
+//     let mut s = String::from("hello world");
+//     let word = first_word(&s);
+//     s.clear();
+//     println!("word is {word}");
+
+//     // let hello = &s[0..5];
+//     // let world = &s[6..11];
+
+//     let ss = String::from("hello");
+
+//     let len = ss.len();
+//     let slice = &ss[3..len];
+//     let slice1 = &ss[3..];
+
+//     println!("slice is {slice}");
+//     println!("slice1 is {slice1}");
+// }
+
+// fn first_word(s: &String) -> usize {
+//     let bytes = s.as_bytes();
+
+//     for (i, &item) in bytes.iter().enumerate() {
+//         if item == b' ' {
+//             return i;
+//         }
+//     }
+//     s.len()
+// }
+
+// fn main() {
+//     let mut s = String::from("hello world");
+//     let word = first_word(&s);
+
+//     s.clear();
+
+//     println!("the first word is : {}", word);
+// }
+
 fn main() {
-    let mut s = String::from("hello world");
-    let word = first_word(&s);
-    s.clear();
-    println!("word is {word}")
+    let my_string = String::from("hello world");
+    let word = first_word(&my_string[0..6]);
+    println!("word is {word}");
+    let word = first_word(&my_string[..]);
+    println!("word is {word}");
+    let word = first_word(&my_string);
+    println!("word is {word}");
+
+    let my_string_literal = "hello world";
+
+    let word = first_word(&my_string_literal[0..6]);
+    println!("word is {word}");
+
+    let word = first_word(&my_string_literal[..]);
+    println!("word is {word}");
+
+    // let word = first_word(my_string_literal);
+    // let word = first_word(&my_string);
+
+    let a = [1, 2, 3, 4, 5];
+
+    let slice = &a[1..3];
+
+    assert_eq!(slice, &[2, 3], "we are testing");
 }
 
-fn first_word(s: &String) -> usize {
+fn first_word(s: &str) -> &str {
     let bytes = s.as_bytes();
 
     for (i, &item) in bytes.iter().enumerate() {
         if item == b' ' {
-            return i;
+            return &s[0..i];
         }
     }
-    s.len()
+    &s[..]
 }
