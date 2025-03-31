@@ -198,12 +198,47 @@
 //     len
 // }
 
-fn main() {
-    let mut s = String::from("hello");
+// fn main() {
+//     let mut s = String::from("hello");
 
-    change(&mut s);
+//     change(&mut s);
+
+//     println!("{s}");
+// }
+
+// fn change(some: &mut String) {
+//     some.push_str(", world!");
+// }
+
+// fn main() {
+//     let dan = dangle();
+//     println!("{dan}");
+// }
+
+// fn dangle() -> String {
+//     let s = String::from("hello");
+
+//     s
+// }
+
+fn main() {
+    let mut s = String::from("Hello world");
+    let ss = "hi";
+    let res = first_word(&mut s);
+    println!("The index is {res}");
+    println!("The index is {res}");
+
+    s.clear(); // mutable borrow 발생
 }
 
-fn change(some: &mut String) {
-    some.push_str(", world!");
+fn first_word(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[..i];
+        }
+    }
+
+    &s[..]
 }
