@@ -139,9 +139,71 @@
 //     &s[..]
 // }
 
+// fn main() {
+//     let mut s = String::from("hello");
+//     s.push_str(", world");
+
+//     println!("{s}");
+// }
+
+// fn main() {
+//     let s1 = String::from("hello");
+//     let s2 = s1;
+
+//     println!("{s2}");
+// }
+
+// fn main() {
+//     let s = String::from("hello");
+
+//     {
+//         println!("{}", s);
+//     }
+//     println!("{}", s);
+//     ownership(s);
+//     // println!("{}", s);
+
+//     let x = 19;
+//     makes_copy(x);
+// }
+
+// // takes_ownership
+// fn ownership(some: String) {
+//     println!("{}", some);
+// }
+
+// fn makes_copy(some_x: i32) {
+//     println!("{some_x}");
+// }
+
+// fn main() {
+//     let s1 = String::from("hello");
+//     let (s2, len) = cal(s1);
+//     println!("{}..{}", s1, len);
+// }
+
+// fn cal(s: String) -> (String, usize) {
+//     let length = s.len();
+//     (s, length)
+// }
+
+// fn main() {
+//     let s1 = String::from("hello00");
+//     let len = cal(&s1);
+//     println!("the length of {s1} is {len}");
+// }
+
+// fn cal(some: &String) -> usize {
+//     let len = some.len();
+//     len
+// }
+
 fn main() {
     let mut s = String::from("hello");
-    s.push_str(", world");
 
-    println!("{s}");
+    change(&mut s);
+}
+
+fn change(some: &mut String) {
+    some.push_str(", world!");
 }
