@@ -224,6 +224,7 @@
 fn main() {
     let mut s = String::from("Hello world");
     let ss = "hi";
+
     let res = first_word(&mut s);
     println!("The index is {res}");
     println!("The index is {res}");
