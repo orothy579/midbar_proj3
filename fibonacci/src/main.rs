@@ -59,5 +59,6 @@
 // }
 
 fn main() {
-    println!("hello ");
+    let quo = 50 / 30;
+    println!("{quo}");
 }
