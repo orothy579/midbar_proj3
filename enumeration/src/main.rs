@@ -81,23 +81,94 @@
 // }
 
 // match 제어 흐름 구조
-enum Coin {
-    Penny,
-    Nickel,
-    Dime,
-    Quarter,
-}
+// enum Coin {
+//     Penny,
+//     Nickel,
+//     Dime,
+//     Quarter,
+// }
 
-fn value_in_cents(coin: Coin) -> u8 {
-    match coin {
-        Coin::Penny => {
-            println!("Lucky Penny!");
-            1
-        }
-        Coin::Nickel => 5,
-        Coin::Dime => 10,
-        Coin::Quarter => 25,
+// fn value_in_cents(coin: Coin) -> u8 {
+//     match coin {
+//         Coin::Penny => {
+//             println!("Lucky Penny!");
+//             1
+//         }
+//         Coin::Nickel => 5,
+//         Coin::Dime => 10,
+//         Coin::Quarter => 25,
+//     }
+// }
+
+//Quarter variable가 UsState 값도 담고 있는 coin 열거형
+// #[derive(Debug)]
+// enum UsState {
+//     Alabama,
+//     Alaska,
+// }
+
+// enum Coin {
+//     Penny,
+//     Nickel,
+//     Dime,
+//     Quarter(UsState),
+// }
+
+// fn value_in_cents(coin: Coin) -> u8 {
+//     match coin {
+//         Coin::Penny => 1,
+//         Coin::Nickel => 5,
+//         Coin::Dime => 10,
+//         Coin::Quarter(state) => {
+//             println!("State quarter from {:?}!", state);
+//             25
+//         }
+//     }
+// }
+
+// Option<T> 을 match에 적용하기
+// fn plus_one(x: Option<i32>) -> Option<i32> {
+//     match x {
+//         None => None,
+//         Some(i) => Some(i + 1),
+//     }
+// }
+
+// fn main() {
+//     let five = Some(5);
+//     let six = plus_one(five);
+//     let none = plus_one(None);
+
+//     println!("{:?}", six);
+//     println!("{:?}", none);
+// }
+
+// _ 자리 표시자 + 포괄 패턴
+// fn main() {
+//     let dice_roll = 9;
+//     match dice_roll {
+//         3 => add_fancy_hat(),
+//         6 => remove_fancy_hat(),
+//         _ => (),
+//     }
+// }
+
+// fn add_fancy_hat() {}
+// fn remove_fancy_hat() {}
+
+// 어떤 값이 some 일 때만 코드를 실행하도록 하는 match
+// fn main() {
+//     let config_max = Some(3u8);
+//     match config_max {
+//         Some(max) => println!("max is {}", max),
+//         _ => (), // 보일러 플레이트 코드
+//     }
+// }
+
+//if let을 사용한 간결한 제어 흐름 -> 한 패턴에 매칠될 때만 코드를 실행하고 다른 경우는 무시하는 match 문 작성시 사용
+fn main() {
+    let config_max = Some(3u8);
+    if let Some(max) = config_max {
+        println!("max is {}", max);
     }
 }
-
-fn main() {}
