@@ -11,14 +11,14 @@ fn main() {
     // println!("{q}");
 
     //대여
-    let mut b = 10;
-    let copy_b = copy_function(b);
-    println!("b is {b}");
-    println!("modified b is {copy_b}");
+    // let mut b = 10;
+    // let copy_b = copy_function(b);
+    // println!("b is {b}");
+    // println!("modified b is {copy_b}");
 
-    let borrow_b = borrow_function(&mut b);
-    println!("b is {b}");
-    println!("modified b is {borrow_b}");
+    // let borrow_b = borrow_function(&mut b);
+    // println!("b is {b}");
+    // println!("modified b is {borrow_b}");
 
     // 함수 없이 참조하기
     // let mut str = String::from("hello");

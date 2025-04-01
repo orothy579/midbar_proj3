@@ -166,28 +166,30 @@
 // }
 
 //if let을 사용한 간결한 제어 흐름 -> 한 패턴에 매칠될 때만 코드를 실행하고 다른 경우는 무시하는 match 문 작성시 사용
-fn main() {
-    let config_max = Some(3u8);
+// fn main() {
+//     let config_max = Some(3u8);
 
-    match config_max {
-        Some(max) => println!("The max is {}", max),
-        _ => (),
-    }
+//     match config_max {
+//         Some(max) => println!("The max is {}", max),
+//         _ => (),
+//     }
 
-    if let Some(max) = config_max {
-        println!("The max is {}", max);
-    }
+//     if let Some(max) = config_max {
+//         println!("The max is {}", max);
+//     }
 
-    let mut count = 0;
-    match coin {
-        Coin::Quarter(state) => println!("State quarter from {:?}!", state),
-        _ => count += 1;
-    }
+//     let mut count = 0;
+//     match coin {
+//         Coin::Quarter(state) => println!("State quarter from {:?}!", state),
+//         _ => count += 1;
+//     }
 
-    let mut count = 0;
-    if let Coin::Quarter(state) = coin {
-        println!("State quarter from {:?}!", state);
-    } else {
-        count +=1;
-    }
-}
+//     let mut count = 0;
+//     if let Coin::Quarter(state) = coin {
+//         println!("State quarter from {:?}!", state);
+//     } else {
+//         count +=1;
+//     }
+// }
+
+fn main() {}
