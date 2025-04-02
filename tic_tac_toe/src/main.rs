@@ -21,34 +21,34 @@ enum CurrentPlayer {
 fn main() {
     println!("Let's play Tic-Tac-Toe !");
 
-    // let player1 = Player {
-    //     name: String::from("player1"),
-    //     win: 0,
-    //     position: Position { row: 0, col: 0 },
-    // };
-
-    // let player2 = Player {
-    //     name: String::from("player2"),
-    //     win: 0,
-    //     position: Position { row: 0, col: 0 },
-    // };
-
-    let player1 = CurrentPlayer::Player1(Player {
+    let player1 = Player {
         name: String::from("player1"),
         win: 0,
         position: Position { row: 0, col: 0 },
-    });
+    };
 
-    let player2 = CurrentPlayer::Player2(Player {
+    let player2 = Player {
         name: String::from("player2"),
         win: 0,
         position: Position { row: 0, col: 0 },
-    });
+    };
+
+    // let player1 = CurrentPlayer::Player1(Player {
+    //     name: String::from("player1"),
+    //     win: 0,
+    //     position: Position { row: 0, col: 0 },
+    // });
+
+    // let player2 = CurrentPlayer::Player2(Player {
+    //     name: String::from("player2"),
+    //     win: 0,
+    //     position: Position { row: 0, col: 0 },
+    // });
 
     // 초기화
-    // let mut current_player = player1.clone();
+    let mut current_player = player1.clone();
     let mut board = [[' '; 3]; 3];
-    let mut current_player = CurrentPlayer::Player1;
+    // let mut current_player = CurrentPlayer::Player1;
 
     // 게임
     loop {
@@ -106,16 +106,16 @@ fn main() {
         }
 
         // 7. 플레이어 교체
-        current_player = match current_player {
-            CurrentPlayer::Player1 => CurrentPlayer::Player2,
-            CurrentPlayer::Player2 => CurrentPlayer::Player1,
-        };
+        // current_player = match current_player {
+        //     CurrentPlayer::Player1 => CurrentPlayer::Player2,
+        //     CurrentPlayer::Player2 => CurrentPlayer::Player1,
+        // };
 
-        // if current_player.name == "player1" {
-        //     current_player = player2.clone();
-        // } else {
-        //     current_player = player1.clone();
-        // }
+        if current_player.name == "player1" {
+            current_player = player2.clone();
+        } else {
+            current_player = player1.clone();
+        }
     }
 }
 
