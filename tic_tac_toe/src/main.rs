@@ -50,15 +50,25 @@ fn main() {
             let mut row = String::new();
             let mut col = String::new();
 
-            println!("Please input the row number.");
+            println!("Please input the row number (0~2, or 'q' to quit):");
             io::stdin()
                 .read_line(&mut row)
                 .expect("Failed to read line");
+
+            if row.trim() == "q" {
+                println!("Quiting the game..");
+                break;
+            }
 
             println!("Please input the column number.");
             io::stdin()
                 .read_line(&mut col)
                 .expect("Failed to read line");
+
+            if col.trim() == "q" {
+                println!("Quiting the game..");
+                break;
+            }
 
             let row: i32 = match row.trim().parse() {
                 Ok(num) => num,
@@ -118,8 +128,12 @@ fn main() {
             }
 
             _ => {
+                println!(
+                    "Final Score => {}: {}, {}: {}",
+                    player1.name, player1.win, player2.name, player2.win
+                );
                 println!("Game Over!");
-                break;
+                break 'outer;
             }
         }
     }
