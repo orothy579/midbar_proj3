@@ -75,7 +75,7 @@ fn main() {
 
         // 3. 사용자 입력 vaildation check
         if position_is_valid(&board, &pos) == false {
-            println!("\nWrong position.. Try again.");
+            println!("\nWrong position.. Try again.\n");
             continue;
         }
 
@@ -87,13 +87,14 @@ fn main() {
         // 5. 승리 조건 체크
         if is_win(&board) == true {
             print_board(&board);
-            println!("{} win!", current_player.name);
+            println!("{} is win!", current_player.name);
             break;
         }
 
         // 6. 무승부 체크
         if is_draw(&board) == true {
             print_board(&board);
+            println!("Draw!");
             break;
         }
 
@@ -114,10 +115,7 @@ fn print_board(board: &[[char; 3]; 3]) {
     }
 }
 
-// logic이 잘못된듯.. -> 한번 wrong positoin 걸리면 계속 wrong positoin 걸린다. --> 해결 됐는데, 왜 됐는지 모름.
 fn position_is_valid(b: &[[char; 3]; 3], p: &Position) -> bool {
-    //  (-1, -1) 과 같이 음수에 접근하는 경우
-    //     -> false -> Question: 이미 타입이 u8인데, 음수가 받아지나?
     if p.col < 0 || p.col > 2 || p.row < 0 || p.row > 2 {
         return false;
     }
@@ -141,8 +139,8 @@ fn mark_of(p: &Player) -> char {
 fn is_win(board: &[[char; 3]; 3]) -> bool {
     let win_condition = [
         [board[0][0], board[1][0], board[2][0]],
-        [board[1][0], board[1][1], board[1][2]],
-        [board[2][0], board[2][1], board[2][2]],
+        [board[0][1], board[1][1], board[2][1]],
+        [board[0][2], board[1][2], board[2][2]],
         [board[0][0], board[0][1], board[0][2]],
         [board[1][0], board[1][1], board[1][2]],
         [board[2][0], board[2][1], board[2][2]],
