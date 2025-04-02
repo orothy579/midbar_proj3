@@ -13,47 +13,41 @@ struct Position {
     col: i32,
 }
 
-enum CurrentPlayer {
-    Player1(Player),
-    Player2(Player),
+enum Turn {
+    Player1,
+    Player2,
 }
 
 fn main() {
     println!("Let's play Tic-Tac-Toe !");
 
-    let player1 = Player {
+    let mut player1 = Player {
         name: String::from("player1"),
         win: 0,
         position: Position { row: 0, col: 0 },
     };
 
-    let player2 = Player {
+    let mut player2 = Player {
         name: String::from("player2"),
         win: 0,
         position: Position { row: 0, col: 0 },
     };
 
-    // let player1 = CurrentPlayer::Player1(Player {
-    //     name: String::from("player1"),
-    //     win: 0,
-    //     position: Position { row: 0, col: 0 },
-    // });
-
-    // let player2 = CurrentPlayer::Player2(Player {
-    //     name: String::from("player2"),
-    //     win: 0,
-    //     position: Position { row: 0, col: 0 },
-    // });
-
     // 초기화
-    let mut current_player = player1.clone();
+    // let mut current_player = player1.clone();
     let mut board = [[' '; 3]; 3];
-    // let mut current_player = CurrentPlayer::Player1;
+    let mut turn = Turn::Player1;
 
     // 게임
     loop {
         // 1.보드 출력
         print_board(&board);
+
+        // 이게 뭐임? 왜 필요한 거임? current_player와 turn을 구분해줬다.
+        let current_player = match turn {
+            Turn::Player1 => &mut player1,
+            Turn::Player2 => &mut player2,
+        };
 
         // 2. 사용자 입력
         let mut row = String::new();
@@ -95,7 +89,7 @@ fn main() {
         // 5. 승리 조건 체크
         if is_win(&board) == true {
             println!("{:?}", board);
-            println!("You win!");
+            println!("{} win!", current_player.name);
             break;
         }
 
@@ -106,16 +100,10 @@ fn main() {
         }
 
         // 7. 플레이어 교체
-        // current_player = match current_player {
-        //     CurrentPlayer::Player1 => CurrentPlayer::Player2,
-        //     CurrentPlayer::Player2 => CurrentPlayer::Player1,
-        // };
-
-        if current_player.name == "player1" {
-            current_player = player2.clone();
-        } else {
-            current_player = player1.clone();
-        }
+        turn = match turn {
+            Turn::Player1 => Turn::Player2,
+            Turn::Player2 => Turn::Player1,
+        };
     }
 }
 
@@ -172,7 +160,7 @@ fn is_win(board: &[[char; 3]; 3]) -> bool {
 fn is_draw(board: &[[char; 3]; 3]) -> bool {
     for b_row in board {
         for e in b_row {
-            if *e != ' ' {
+            if *e == ' ' {
                 return false;
             }
         }
