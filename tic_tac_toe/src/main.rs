@@ -13,24 +13,42 @@ struct Position {
     col: i32,
 }
 
-fn main() {
-    println!("Hello, world!");
+enum CurrentPlayer {
+    Player1(Player),
+    Player2(Player),
+}
 
-    let player1 = Player {
+fn main() {
+    println!("Let's play Tic-Tac-Toe !");
+
+    // let player1 = Player {
+    //     name: String::from("player1"),
+    //     win: 0,
+    //     position: Position { row: 0, col: 0 },
+    // };
+
+    // let player2 = Player {
+    //     name: String::from("player2"),
+    //     win: 0,
+    //     position: Position { row: 0, col: 0 },
+    // };
+
+    let player1 = CurrentPlayer::Player1(Player {
         name: String::from("player1"),
         win: 0,
         position: Position { row: 0, col: 0 },
-    };
+    });
 
-    let player2 = Player {
+    let player2 = CurrentPlayer::Player2(Player {
         name: String::from("player2"),
         win: 0,
         position: Position { row: 0, col: 0 },
-    };
+    });
 
     // 초기화
-    let mut current_player = player1.clone();
-    let mut board: [[char; 3]; 3] = [[' '; 3]; 3];
+    // let mut current_player = player1.clone();
+    let mut board = [[' '; 3]; 3];
+    let mut current_player = CurrentPlayer::Player1;
 
     // 게임
     loop {
@@ -82,18 +100,22 @@ fn main() {
         }
 
         // 6. 무승부 체크
-        if is_draw(&board) {
+        if is_draw(&board) == true {
             println!("draw!");
             break;
         }
 
         // 7. 플레이어 교체
-        // clone 말고 다른 방법으로 교체 예정 -> player 교체가 안된다.
-        if current_player == player1 {
-            current_player = player2.clone();
-        } else {
-            current_player = player1.clone();
-        }
+        current_player = match current_player {
+            CurrentPlayer::Player1 => CurrentPlayer::Player2,
+            CurrentPlayer::Player2 => CurrentPlayer::Player1,
+        };
+
+        // if current_player.name == "player1" {
+        //     current_player = player2.clone();
+        // } else {
+        //     current_player = player1.clone();
+        // }
     }
 }
 
@@ -128,7 +150,7 @@ fn mark_of(p: &Player) -> char {
 fn is_win(board: &[[char; 3]; 3]) -> bool {
     let win_condition = [
         [board[0][0], board[1][0], board[2][0]],
-        [board[1][1], board[1][1], board[1][2]],
+        [board[1][0], board[1][1], board[1][2]],
         [board[2][0], board[2][1], board[2][2]],
         [board[0][0], board[0][1], board[0][2]],
         [board[1][0], board[1][1], board[1][2]],
@@ -146,8 +168,9 @@ fn is_win(board: &[[char; 3]; 3]) -> bool {
     return false;
 }
 
-fn is_draw(b: &[[char; 3]; 3]) -> bool {
-    for b_row in b {
+// is_draw의 logic이 안걸린다.
+fn is_draw(board: &[[char; 3]; 3]) -> bool {
+    for b_row in board {
         for e in b_row {
             if *e != ' ' {
                 return false;
