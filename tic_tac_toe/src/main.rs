@@ -1,10 +1,13 @@
 use std::io;
+
+#[derive(PartialEq, Clone)]
 struct Player {
     name: String,
     win: u8,
     position: Position,
 }
 
+#[derive(PartialEq, Clone)]
 struct Position {
     row: u8,
     col: u8,
@@ -26,9 +29,8 @@ fn main() {
     };
 
     // 초기화
-    let mut current_player = player1;
-    let game_end = false;
-    let mut board = String::from("");
+    let mut current_player = player1.clone();
+    let mut board: [[&str; 3]; 3] = [[" "; 3]; 3];
 
     // 게임
     'main_loop: loop {
@@ -49,39 +51,60 @@ fn main() {
             .read_line(&mut col)
             .expect("Failed to read line");
 
-        current_player.position.row = match row.trim().parse() {
+        let row: usize = match row.trim().parse() {
             Ok(num) => num,
             Err(_) => continue,
         };
 
-        current_player.position.col = match col.trim().parse() {
+        let col: usize = match col.trim().parse() {
             Ok(num) => num,
             Err(_) => continue,
         };
 
-        // 3. 사용자 입력 vaildation check
-        if position_is_valid(&board, &current_player.position) == false {
-            println!("Wrong position.. Try again.");
-            continue;
-        }
+        // // 3. 사용자 입력 vaildation check
+        // if position_is_valid(&board, &current_player.position) == false {
+        //     println!("Wrong position.. Try again.");
+        //     continue;
+        // }
 
-        // 4. 유효한 경우 보드에 마커 그리기
+        // // 4. 유효한 경우 보드에 마커 그리기
+        // board[row][col] = mark_of(&current_player);
 
-        // 5. 승리 조건 체크
+        // // 5. 승리 조건 체크
+        // if is_win() {
+        //     println!("You win!");
+        //     break;
+        // }
 
-        // 6. 무승부 체크
+        // // 6. 무승부 체크
+        // if is_draw() {
+        //     println!("draw!");
+        //     break;
+        // }
 
         // 7. 플레이어 교체
         if current_player == player1 {
-            current_player = player2;
+            current_player = player2.clone();
         } else {
-            current_player = player1;
+            current_player = player1.clone();
         }
     }
 }
 
-fn print_board(board: &String) {}
+fn print_board(board: &[[&str; 3]; 3]) {
+    println!("{:#?}", board);
+}
 
 fn position_is_valid(b: &String, p: &Position) -> bool {
     return false;
+}
+
+fn mark_of(p: &Player) {}
+
+fn is_win() -> bool {
+    return true;
+}
+
+fn is_draw() -> bool {
+    return true;
 }
