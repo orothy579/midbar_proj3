@@ -45,6 +45,8 @@ fn main() {
                 Turn::Player2 => &mut player2,
             };
 
+            println!("{}'s turn.", current_player.name);
+
             // 2. 사용자 입력
             let mut row = String::new();
             let mut col = String::new();
@@ -56,17 +58,17 @@ fn main() {
 
             if row.trim() == "q" {
                 println!("Quiting the game..");
-                break 'outer;
+                break 'game;
             }
 
-            println!("Please input the column number.");
+            println!("Please input the column number (0~2, or 'q' to quit):");
             io::stdin()
                 .read_line(&mut col)
                 .expect("Failed to read line");
 
             if col.trim() == "q" {
                 println!("Quiting the game..");
-                break 'outer;
+                break 'game;
             }
 
             let row: i32 = match row.trim().parse() {
@@ -169,8 +171,6 @@ fn position_is_valid(board: &[[char; 3]; 3], p: &Position) -> bool {
 }
 
 fn mark_of(turn: &Turn) -> char {
-    // if board is full
-
     match turn {
         Turn::Player1 => return 'X',
         Turn::Player2 => return 'O',
