@@ -40,7 +40,6 @@ fn main() {
             // 1.보드 출력
             print_board(&board);
 
-            // 이게 뭐임? 왜 필요한 거임? => current_player와 turn을 구분해줬다.
             let current_player = match turn {
                 Turn::Player1 => &mut player1,
                 Turn::Player2 => &mut player2,
@@ -57,7 +56,7 @@ fn main() {
 
             if row.trim() == "q" {
                 println!("Quiting the game..");
-                break;
+                break 'outer;
             }
 
             println!("Please input the column number.");
@@ -67,29 +66,28 @@ fn main() {
 
             if col.trim() == "q" {
                 println!("Quiting the game..");
-                break;
+                break 'outer;
             }
 
             let row: i32 = match row.trim().parse() {
                 Ok(num) => num,
-                Err(_) => continue,
+                Err(_) => continue 'game,
             };
 
             let col: i32 = match col.trim().parse() {
                 Ok(num) => num,
-                Err(_) => continue,
+                Err(_) => continue 'game,
             };
 
-            // 이걸 왜 저장 해둬야 하나? 매개변수로 바로 pos를 넣어주면 안되는 이유는?
             let pos = Position { row, col };
 
             // 3. 사용자 입력 vaildation check
             if position_is_valid(&board, &pos) == false {
                 println!("Wrong position.. Try again.\n");
-                continue;
+                continue 'game;
             }
 
-            current_player.position = Position { row, col };
+            current_player.position = pos;
 
             // 4. 유효한 경우 보드에 마커 그리기
             board[row as usize][col as usize] = mark_of(&turn);
@@ -97,15 +95,21 @@ fn main() {
             // 5. 승리 조건 체크
             if is_win(&board) == true {
                 print_board(&board);
-                println!("{} is win!", current_player.name);
-                break;
+                println!("{} win!", current_player.name);
+                current_player.win += 1;
+
+                println!(
+                    "Current score => {}: {}, {}: {}",
+                    player1.name, player1.win, player2.name, player2.win
+                );
+                break 'game;
             }
 
             // 6. 무승부 체크
             if is_draw(&board) == true {
                 print_board(&board);
                 println!("Draw!");
-                break;
+                break 'game;
             }
 
             // 7. 플레이어 교체
@@ -115,6 +119,7 @@ fn main() {
             };
         }
 
+        // 8. 다음판 진행 여부 묻기
         println!("Want to play again? (y/n): ");
         let mut answer = String::new();
         io::stdin()
@@ -149,14 +154,14 @@ fn print_board(board: &[[char; 3]; 3]) {
     }
 }
 
-fn position_is_valid(b: &[[char; 3]; 3], p: &Position) -> bool {
+fn position_is_valid(board: &[[char; 3]; 3], p: &Position) -> bool {
     if p.col < 0 || p.col > 2 || p.row < 0 || p.row > 2 {
         println!("Out of index..");
         return false;
     }
     //  이미 있는 포지션에 접근하는 경우 -> false
-    if b[p.row as usize][p.col as usize] != ' ' {
-        println!("\nAlready possesed..");
+    if board[p.row as usize][p.col as usize] != ' ' {
+        println!("\nAlready occupied..");
         return false;
     }
 
