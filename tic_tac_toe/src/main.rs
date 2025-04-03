@@ -7,8 +7,8 @@ struct Player {
 }
 
 struct Position {
-    row: i32,
-    col: i32,
+    row: i8,
+    col: i8,
 }
 
 enum Turn {
@@ -71,12 +71,12 @@ fn main() {
                 break 'game;
             }
 
-            let row: i32 = match row.trim().parse() {
+            let row: i8 = match row.trim().parse() {
                 Ok(num) => num,
                 Err(_) => continue 'game,
             };
 
-            let col: i32 = match col.trim().parse() {
+            let col: i8 = match col.trim().parse() {
                 Ok(num) => num,
                 Err(_) => continue 'game,
             };
@@ -89,6 +89,7 @@ fn main() {
                 continue 'game;
             }
 
+            // 현재 플레이어 position 업데이트
             current_player.position = pos;
 
             // 4. 유효한 경우 보드에 마커 그리기
