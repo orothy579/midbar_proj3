@@ -1,9 +1,10 @@
 use std::io;
 
 struct Player {
+    id: Id,
     name: String,
     win: u8,
-    position: Position,
+    marker: char,
 }
 
 struct Position {
@@ -11,7 +12,7 @@ struct Position {
     col: i8,
 }
 
-enum Turn {
+enum Id {
     Player1,
     Player2,
 }
@@ -20,30 +21,27 @@ fn main() {
     println!("Let's play Tic-Tac-Toe !\n");
 
     let mut player1 = Player {
+        id: Id::Player1,
         name: String::from("player1"),
         win: 0,
-        position: Position { row: 0, col: 0 },
+        marker: 'X',
     };
 
     let mut player2 = Player {
+        id: Id::Player2,
         name: String::from("player2"),
         win: 0,
-        position: Position { row: 0, col: 0 },
+        marker: 'O',
     };
 
     'outer: loop {
         let mut board = [[' '; 3]; 3];
-        let mut turn = Turn::Player1;
+        let mut current_player = &mut player1;
 
         // 게임
         'game: loop {
             // 1.보드 출력
             print_board(&board);
-
-            let current_player = match turn {
-                Turn::Player1 => &mut player1,
-                Turn::Player2 => &mut player2,
-            };
 
             println!("{}'s turn.", current_player.name);
 
@@ -90,13 +88,14 @@ fn main() {
             }
 
             // 현재 플레이어 position 업데이트
-            current_player.position = pos;
+            // current_player.position = pos;
 
             // 4. 유효한 경우 보드에 마커 그리기
-            board[row as usize][col as usize] = mark_of(&turn);
+
+            board[row as usize][col as usize] = current_player.marker;
 
             // 5. 승리 조건 체크
-            if is_win(&board) == true {
+            if is_win(&board) {
                 print_board(&board);
                 println!("{} win!", current_player.name);
                 current_player.win += 1;
@@ -109,16 +108,17 @@ fn main() {
             }
 
             // 6. 무승부 체크
-            if is_draw(&board) == true {
+            if is_draw(&board) {
                 print_board(&board);
                 println!("Draw!");
                 break 'game;
             }
 
             // 7. 플레이어 교체
-            turn = match turn {
-                Turn::Player1 => Turn::Player2,
-                Turn::Player2 => Turn::Player1,
+
+            current_player = match current_player.id {
+                Id::Player1 => &mut player2,
+                Id::Player2 => &mut player1,
             };
         }
 
@@ -136,15 +136,16 @@ fn main() {
             }
 
             _ => {
-                println!(
-                    "Final Score => {}: {}, {}: {}",
-                    player1.name, player1.win, player2.name, player2.win
-                );
-                println!("Game Over!");
                 break 'outer;
             }
         }
     }
+
+    println!(
+        "Final Score => {}: {}, {}: {}",
+        player1.name, player1.win, player2.name, player2.win
+    );
+    println!("Game Over!");
     // 초기화
 }
 
@@ -169,13 +170,6 @@ fn position_is_valid(board: &[[char; 3]; 3], p: &Position) -> bool {
     }
 
     return true;
-}
-
-fn mark_of(turn: &Turn) -> char {
-    match turn {
-        Turn::Player1 => return 'X',
-        Turn::Player2 => return 'O',
-    }
 }
 
 fn is_win(board: &[[char; 3]; 3]) -> bool {
