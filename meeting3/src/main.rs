@@ -55,8 +55,6 @@ fn main() {
     println!("{:#?}", user1);
 
     let addr = IpAddrKind::V4(String::from("127.0.0.1"));
-
-    println!("hi");
 }
 
 fn plus_one(x: Option<i32>) -> Option<i32> {
