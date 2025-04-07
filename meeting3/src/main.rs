@@ -33,10 +33,10 @@ struct MoveMsg {
     y: i32,
 }
 
-// enum Option<T> {
-//     None,
-//     some(T),
-// }
+enum Option<T> {
+    None,
+    some(T),
+}
 
 fn main() {
     let mut user1 = User {
