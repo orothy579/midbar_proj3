@@ -49,7 +49,7 @@ fn main() {
             let mut row = String::new();
             let mut col = String::new();
 
-            println!("Please input the row number (0~2, or 'q' to quit):");
+            println!("Please input the row number (1~3, or 'q' to quit):");
             io::stdin()
                 .read_line(&mut row)
                 .expect("Failed to read line");
@@ -59,7 +59,7 @@ fn main() {
                 break 'game;
             }
 
-            println!("Please input the column number (0~2, or 'q' to quit):");
+            println!("Please input the column number (1~3, or 'q' to quit):");
             io::stdin()
                 .read_line(&mut col)
                 .expect("Failed to read line");
@@ -159,7 +159,7 @@ fn print_board(board: &[[char; 3]; 3]) {
 }
 
 fn position_is_valid(board: &[[char; 3]; 3], p: &Position) -> bool {
-    if p.col < 0 || p.col > 2 || p.row < 0 || p.row > 2 {
+    if p.col < 1 || p.col > 3 || p.row < 1 || p.row > 3 {
         println!("Out of index..");
         return false;
     }
