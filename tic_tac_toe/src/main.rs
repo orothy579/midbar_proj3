@@ -1,4 +1,7 @@
-use std::io::{self, Read};
+use std::{
+    io::{self, Read},
+    ptr::eq,
+};
 
 struct Player {
     id: Id,
@@ -55,6 +58,10 @@ fn main() {
             io::stdin()
                 .read_line(&mut input)
                 .expect("Failed to read line.");
+
+            if input.trim() == "q" {
+                break 'game;
+            }
 
             let cell: Vec<i32> = input
                 .split_whitespace()
