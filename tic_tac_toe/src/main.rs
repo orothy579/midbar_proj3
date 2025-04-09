@@ -1,4 +1,4 @@
-use std::io;
+use std::io::{self, Read};
 
 struct Player {
     id: Id,
@@ -48,6 +48,20 @@ fn main() {
             // 2. 사용자 입력
             let mut row = String::new();
             let mut col = String::new();
+
+            let mut input = String::new();
+            println!("Please input the row, col number. (1~3 or 'q' to quit)");
+
+            io::stdin()
+                .read_line(&mut input)
+                .expect("Failed to read line.");
+
+            let cell: Vec<i32> = input
+                .split_whitespace()
+                .map(|x| x.parse::<i32>().expect("Failed to parse"))
+                .collect();
+
+            println!("cell : {:?}", cell);
 
             println!("Please input the row number (1~3, or 'q' to quit):");
             io::stdin()
