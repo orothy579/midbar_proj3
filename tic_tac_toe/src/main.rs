@@ -65,30 +65,10 @@ fn main() {
 
             let cell: Vec<i32> = input
                 .split_whitespace()
-                .map(|x| x.parse::<i32>().expect("Failed to parse"))
+                .map(|x| x.parse::<i32>().expect("Failed to convert."))
                 .collect();
 
             println!("cell : {:?}", cell);
-
-            println!("Please input the row number (1~3, or 'q' to quit):");
-            io::stdin()
-                .read_line(&mut row)
-                .expect("Failed to read line");
-
-            if row.trim() == "q" {
-                println!("Quiting the game..");
-                break 'game;
-            }
-
-            println!("Please input the column number (1~3, or 'q' to quit):");
-            io::stdin()
-                .read_line(&mut col)
-                .expect("Failed to read line");
-
-            if col.trim() == "q" {
-                println!("Quiting the game..");
-                break 'game;
-            }
 
             let row: i8 = match row.trim().parse() {
                 Ok(num) => num,
