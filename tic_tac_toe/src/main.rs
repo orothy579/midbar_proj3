@@ -108,7 +108,7 @@ fn main() {
                 break 'game;
             }
 
-            // 6. 무승부 체크
+            // 6.무승부 체크
             if is_draw(&board) {
                 print_board(&board);
                 println!("Draw!");
