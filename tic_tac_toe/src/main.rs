@@ -63,24 +63,17 @@ fn main() {
                 break 'game;
             }
 
-            let cell: Vec<i32> = input
+            let cell: Vec<i8> = input
                 .split_whitespace()
-                .map(|x| x.parse::<i32>().expect("Failed to convert."))
+                .map(|x| x.parse::<i8>().expect("Failed to convert."))
                 .collect();
 
             println!("cell : {:?}", cell);
 
-            let row: i8 = match row.trim().parse() {
-                Ok(num) => num,
-                Err(_) => continue 'game,
+            let pos = Position {
+                row: cell[0],
+                col: cell[1],
             };
-
-            let col: i8 = match col.trim().parse() {
-                Ok(num) => num,
-                Err(_) => continue 'game,
-            };
-
-            let pos = Position { row, col };
 
             // 3. 사용자 입력 vaildation check
             if position_is_valid(&board, &pos) == false {
@@ -88,12 +81,9 @@ fn main() {
                 continue 'game;
             }
 
-            // 현재 플레이어 position 업데이트
-            // current_player.position = pos;
-
             // 4. 유효한 경우 보드에 마커 그리기
 
-            board[row as usize][col as usize] = current_player.marker;
+            board[cell[0] as usize][cell[1] as usize] = current_player.marker;
 
             // 5. 승리 조건 체크
             if is_win(&board) {
