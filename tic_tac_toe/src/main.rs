@@ -1,7 +1,4 @@
-use std::{
-    io::{self, Read},
-    ptr::eq,
-};
+use std::io::{self};
 
 struct Player {
     id: Id,
@@ -43,15 +40,12 @@ fn main() {
 
         // 게임
         'game: loop {
-            // 1.보드 출력
+            // 1.보드 출력 하기
             print_board(&board);
 
             println!("{}'s turn.", current_player.name);
 
             // 2. 사용자 입력
-            let mut row = String::new();
-            let mut col = String::new();
-
             let mut input = String::new();
             println!("Please input the row, col number. (1~3 or 'q' to quit)");
 
@@ -68,11 +62,14 @@ fn main() {
                 .map(|x| x.parse::<i8>().expect("Failed to convert."))
                 .collect();
 
-            println!("cell : {:?}", cell);
+            if cell.len() < 2 {
+                println!("Please input 2 numbers..");
+                continue 'game;
+            }
 
             let pos = Position {
-                row: cell[0],
-                col: cell[1],
+                row: cell[0] - 1,
+                col: cell[1] - 1,
             };
 
             // 3. 사용자 입력 vaildation check
@@ -82,8 +79,7 @@ fn main() {
             }
 
             // 4. 유효한 경우 보드에 마커 그리기
-
-            board[cell[0] as usize][cell[1] as usize] = current_player.marker;
+            board[pos.row as usize][pos.col as usize] = current_player.marker;
 
             // 5. 승리 조건 체크
             if is_win(&board) {
@@ -150,7 +146,7 @@ fn print_board(board: &[[char; 3]; 3]) {
 }
 
 fn position_is_valid(board: &[[char; 3]; 3], p: &Position) -> bool {
-    if p.col < 1 || p.col > 3 || p.row < 1 || p.row > 3 {
+    if p.col < 0 || p.col > 3 || p.row < 0 || p.row > 3 {
         println!("Out of index..");
         return false;
     }
